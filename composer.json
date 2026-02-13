@@ -4,17 +4,39 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/dbal": "^3.10.4",
+        "doctrine/doctrine-bundle": "^2.18.2",
+        "doctrine/doctrine-migrations-bundle": "^3.7",
+        "doctrine/orm": "^3.6.2",
+        "gpslab/geoip2": "^2.1",
+        "knplabs/knp-menu-bundle": "^3.7",
+        "knplabs/knp-time-bundle": "^2.5",
+        "phpdocumentor/reflection-docblock": "^5.6.6",
+        "phpstan/phpdoc-parser": "^2.3.2",
+        "ramazancetinkaya/byte-formatter": "^1.0",
+        "runtime/frankenphp-symfony": "^1.0",
+        "schulit/common-bundle": "*",
         "symfony/console": "7.3.*",
+        "symfony/doctrine-messenger": "7.3.*",
         "symfony/dotenv": "7.3.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.10",
         "symfony/framework-bundle": "7.3.*",
+        "symfony/http-client": "7.3.*",
+        "symfony/messenger": "7.3.*",
+        "symfony/property-access": "7.3.*",
+        "symfony/property-info": "7.3.*",
         "symfony/runtime": "7.3.*",
-        "symfony/yaml": "7.3.*"
-    },
-    "require-dev": {
+        "symfony/scheduler": "7.3.*",
+        "symfony/serializer": "7.3.*",
+        "symfony/twig-bundle": "7.3.*",
+        "symfony/web-link": "7.3.*",
+        "symfony/webpack-encore-bundle": "^2.4",
+        "symfony/yaml": "7.3.*",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "allow-plugins": {
@@ -48,7 +70,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "geoip2:update": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

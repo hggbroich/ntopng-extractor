@@ -8,6 +8,16 @@ framework:
     #esi: true
     #fragments: true
 
+    serializer:
+        name_converter: 'serializer.name_converter.camel_case_to_snake_case'
+
+    http_client:
+        scoped_clients:
+            ntopng.client:
+                base_uri: '%env(NTOPNG)%'
+                auth_basic: '%env(NTOPNG_AUTH)%'
+                cafile: '%kernel.project_dir%/certs/%env(NTOPNG_CERT)%'
+
 when@test:
     framework:
         test: true

@@ -1,0 +1,21 @@
+dashboard:
+    menu: Übersicht
+
+flows:
+    menu: Flows
+    count: '%count% Flows'
+
+    last_seen: zuletzt gesehen
+    duration: Dauer
+    protocol:
+        l4: L4-Protokoll
+        l7: L7-Anwendung
+    endpoint:
+        local: Lokal
+        remote: Server
+    bytes: Bytes
+    hostname: Hostname
+    ip: IP-Adresse
+    asn: ASN
+    country: Land
+    info: Info

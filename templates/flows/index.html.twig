@@ -1,0 +1,173 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'flows.menu'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.menu'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex flex-wrap mt-n2">
+                <div class="flex-fill mt-2">
+                    <form method="get" class="row row-cols-lg-auto g-1 align-items-center">
+                        <div class="col">
+                            <select name="l4proto" class="form-select form-select-sm" data-trigger="submit">
+                                <option value="">{{ 'flows.protocol.l4'|trans }}</option>
+                                {% for proto in l4protos %}
+                                    <option value="{{ proto }}" {% if proto == l4proto %} selected{% endif %}>{{ proto }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <select name="l7proto" class="form-select form-select-sm" data-trigger="submit">
+                                <option value="">{{ 'flows.protocol.l7'|trans }}</option>
+                                {% for proto in l7protos %}
+                                    <option value="{{ proto }}" {% if proto == l7proto %} selected{% endif %}>{{ proto }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <input class="form-control form-control-sm" type="text" placeholder="{{ 'flows.ip'|trans }}" name="ip" value="{{ ip }}">
+                        </div>
+
+                        <div class="col">
+                            <input class="form-control form-control-sm" type="text" placeholder="{{ 'flows.hostname'|trans }}" name="hostname" value="{{ hostname }}">
+                        </div>
+
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% if flows|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-hover table-striped card-table">
+                    <colgroup>
+                        <col class="column-lg">
+                        <col class="column-md">
+                        <col class="column-md">
+                        <col class="column-md">
+                        <col>
+                        <col>
+                        <col>
+                        <col class="column-lg">
+                        <col class="column-sm">
+                        <col class="column-md">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>{{ 'flows.last_seen'|trans }}</th>
+                        <th>{{ 'flows.duration'|trans }}</th>
+                        <th>{{ 'flows.protocol.l4'|trans }}</th>
+                        <th>{{ 'flows.protocol.l7'|trans }}</th>
+                        <th>{{ 'flows.endpoint.local'|trans }}</th>
+                        <th>{{ 'flows.endpoint.remote'|trans }}</th>
+                        <th>{{ 'flows.info'|trans }}</th>
+                        <th>{{ 'flows.asn'|trans }}</th>
+                        <th>{{ 'flows.country'|trans }}</th>
+                        <th>{{ 'flows.bytes'|trans }}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for flow in flows %}
+                        <tr>
+                            <td class="align-middle">
+                                <span title="{{ flow.lastSeen|format_datetime }}">
+                                    {{ flow.lastSeen|ago }}
+                                </span>
+                            </td>
+                            <td class="align-middle">
+                                {{ flow.duration.s|duration }}
+                            </td>
+                            <td class="align-middle">
+                                {{ flow.l4proto }}
+                            </td>
+                            <td class="align-middle">
+                                {{ flow.l7proto }}
+                            </td>
+                            <td class="align-middle">
+                                {{ flow.local.ip }}:{{ flow.local.port }}
+
+                                <span class="badge text-bg-primary">
+                                    <i class="fas fa-computer"></i> {{ flow.local.name }}
+                                </span>
+
+                                {% if flow.localMac is not empty %}
+                                    <span class="badge text-bg-secondary">
+                                        <i class="fas fa-network-wired"></i> {{ flow.localMac }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">
+                                {{ flow.remote.ip }}:{{ flow.remote.port }}
+
+                                <span class="badge text-bg-primary">
+                                    <i class="fas fa-server"></i> {{ flow.remote.name }}
+                                </span>
+                            </td>
+                            <td class="align-middle">
+                                {{ flow.info }}
+                            </td>
+                            <td class="align-middle">
+                                {% if flow.asn is not empty %}
+                                    AS{{ flow.asn['autonomous_system_number'] }}
+
+                                    <span class="badge text-bg-primary">
+                                        {{ flow.asn['autonomous_system_organization'] }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">
+                                {% if flow.geoIP is not empty %}
+                                    {{ flow.geoIP['country']['iso_code'] }}
+                                {% endif %}
+                            </td>
+                            <td class="align-middle">
+                                {{ flow.bytes|bytes }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <div class="card-footer">
+            <div class="d-flex">
+                <div class="flex-fill align-self-center">
+                    {{ 'flows.count'|trans({'%count%': flows.totalCount}) }}
+                </div>
+
+                <div class="ms-auto">
+                    {% include '@Common/includes/pagination.html.twig' with {
+                        currentFilters: {
+                            l4proto: l4proto,
+                            l7proto: l7proto,
+                            hostname: hostname,
+                            ip: ip
+                        },
+                        currentPage: flows.page,
+                        lastPage: flows.totalPages,
+                        paginationPath: 'flows',
+                        showAlwaysFirstAndLast: true
+                    } %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
