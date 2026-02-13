@@ -17,6 +17,7 @@ framework:
                 base_uri: '%env(NTOPNG)%'
                 auth_basic: '%env(NTOPNG_AUTH)%'
                 cafile: '%kernel.project_dir%/certs/%env(NTOPNG_CERT)%'
+                max_redirects: 0
 
 when@test:
     framework:
