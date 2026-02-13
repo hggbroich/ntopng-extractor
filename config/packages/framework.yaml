@@ -18,6 +18,7 @@ framework:
                 auth_basic: '%env(NTOPNG_AUTH)%'
                 cafile: '%kernel.project_dir%/certs/%env(NTOPNG_CERT)%'
                 max_redirects: 0
+                verify_peer: '%env(bool:NTOPNG_VERIFYPEER)%'
                 headers:
                     Accept: application/json
 
