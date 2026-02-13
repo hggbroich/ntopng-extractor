@@ -19,6 +19,7 @@ framework:
                 cafile: '%kernel.project_dir%/certs/%env(NTOPNG_CERT)%'
                 max_redirects: 0
                 verify_peer: '%env(bool:NTOPNG_VERIFYPEER)%'
+                verify_host: '%env(bool:NTOPNG_VERIFYHOST)%'
                 headers:
                     Accept: application/json
 
