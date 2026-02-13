@@ -9,22 +9,27 @@ use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsCommand('ntopng:hosts:collect')]
 readonly class CollectActiveHostsCommand {
 
-    public function __construct(private MessageBusInterface $messageBus, private Client $client) {
+    public function __construct(
+        private MessageBusInterface $messageBus,
+        private Client $client,
+        #[Autowire(env: 'INTERFACE')] private int $interfaceId
+    ) {
 
     }
 
-    public function __invoke(#[Argument] int $interface, OutputInterface $output): int {
+    public function __invoke(OutputInterface $output): int {
         while(true) {
             $page = 1;
             $perPage = 100;
 
             do {
-                $response = $this->client->getLocalHosts($interface, $page, $perPage);
+                $response = $this->client->getLocalHosts($this->interfaceId, $page, $perPage);
 
                 foreach ($response->hosts as $host) {
                     $this->messageBus->dispatch(new StoreHostMessage($host));
