@@ -1,0 +1,105 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'hosts.menu'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.menu'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex flex-wrap mt-n2">
+                <div class="flex-fill mt-2">
+                    <form method="get" class="row row-cols-lg-auto g-1 align-items-center">
+                        <div class="col">
+                            <input type="text" name="ip" value="{{ ip }}" class="form-control form-control-sm" placeholder="{{ 'hosts.ip'|trans }}">
+                        </div>
+
+                        <div class="col">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-search"></i>
+                            </button>
+
+                            {% if ip is not empty %}
+                                <a href="{{ path('hosts') }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-cancel"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% if hosts|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-hover table-striped card-table">
+                    <colgroup>
+                        <col class="column-md">
+                        <col class="column-md">
+                        <col class="column-lg">
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>{{ 'hosts.ip'|trans }}</th>
+                        <th>{{ 'hosts.mac'|trans }}</th>
+                        <th>{{ 'hosts.name'|trans }}</th>
+                        <th>{{ 'hosts.first_seen'|trans }}</th>
+                        <th>{{ 'hosts.last_seen'|trans }}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for host in hosts %}
+                        <tr>
+                            <td class="align-middle">
+                                {{ host.ip }}
+                            </td>
+                            <td class="align-middle">
+                                {{ host.mac }}
+                            </td>
+                            <td class="align-middle">
+                                {{ host.name }}
+                            </td>
+                            <td class="align-middle">
+                                <span title="{{ host.firstSeen|format_datetime }}">
+                                    {{ host.firstSeen|ago }}
+                                </span>
+                            </td>
+                            <td class="align-middle">
+                                <span title="{{ host.lastSeen|format_datetime }}">
+                                    {{ host.lastSeen|ago }}
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <div class="card-footer">
+            <div class="d-flex">
+                <div class="flex-fill align-self-center">
+                    {{ 'hosts.count'|trans({'%count%': hosts.totalCount}) }}
+                </div>
+
+                <div class="ms-auto">
+                    {% include '@Common/includes/pagination.html.twig' with {
+                        currentFilters: { },
+                        currentPage: hosts.page,
+                        lastPage: hosts.totalPages,
+                        paginationPath: 'hosts',
+                        showAlwaysFirstAndLast: true
+                    } %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

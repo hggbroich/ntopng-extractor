@@ -45,12 +45,16 @@
                             <button type="submit" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-search"></i>
                             </button>
+
+                            {% if l4proto is not empty or l7proto is not empty or ip is not empty or hostname is not empty %}
+                                <a href="{{ path('flows') }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-cancel"></i>
+                                </a>
+                            {% endif %}
                         </div>
                     </form>
                 </div>
             </div>
-
-
         </div>
 
         {% if flows|length > 0 %}

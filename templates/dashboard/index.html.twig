@@ -1,5 +1,45 @@
 {% extends "main.html.twig" %}
 
+{% block title %}{{ 'dashboard.menu'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">{{ 'dashboard.menu'|trans }}</li>
+    </ol>
+{% endblock %}
+
 {% block content %}
-    HALLO
+    <div class="row row-cols-1 row-cols-sm-{{ min(l4statistics|length, 5) }} g-4 mb-4 d-none d-sm-flex">
+        {% for statistics in l4statistics %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ statistics['proto'] }}</h5>
+                        <p class="display-6">{{ statistics['count'] }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-{{ min(l7statistics|length, 5) }} g-4 mb-4 d-none d-sm-flex">
+        {% for statistics in l7statistics %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ statistics['proto'] }}</h5>
+                        <p class="display-6">{{ statistics['count'] }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <div class="list-group list-group-flush">
+            {% for i in info %}
+                <a class="list-group-item list-group-item-action" href="{{ path('flows', { hostname: i }) }}">{{ i }}</a>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

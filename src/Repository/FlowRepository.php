@@ -31,8 +31,13 @@ class FlowRepository extends AbstractRepository implements FlowRepositoryInterfa
         }
 
         if($hostname !== null) {
-            $qb->andWhere('f.remote.name = :hostname')
-                ->setParameter('hostname', $hostname);
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    'f.remote.name LIKE :hostname',
+                    'f.info LIKE :hostname'
+                )
+            )
+                ->setParameter('hostname', '%' . $hostname . '%');
         }
 
         return PaginatedResult::fromQueryBuilder($qb, $paginationQuery);
@@ -63,11 +68,57 @@ class FlowRepository extends AbstractRepository implements FlowRepositoryInterfa
     }
 
     #[Override]
+    public function findInfo(): array {
+        return $this->em->createQueryBuilder()
+            ->select('DISTINCT f.info')
+            ->from(Flow::class, 'f')
+            ->groupBy('f.info')
+            ->where('f.info IS NOT NULL')
+            ->andWhere("f.info != ''")
+            ->orderBy('f.info', 'ASC')
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    #[Override]
     public function purgeOlderThan(DateTime $threshold): int {
         return $this->em->createQueryBuilder()
             ->delete(Flow::class, 'f')
             ->where('f.lastSeen < :threshold')
             ->setParameter('threshold', $threshold)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    #[Override]
+    public function computeL4ProtoStatistics(): array {
+        return $this->em->createQueryBuilder()
+            ->select(['f.l4proto AS proto', 'COUNT(f.l4proto) AS count'])
+            ->from(Flow::class, 'f')
+            ->groupBy('f.l4proto')
+            ->where('f.l4proto IS NOT NULL')
+            ->orderBy('f.l4proto', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    #[Override]
+    public function computeL7ProtoStatistics(): array {
+        return $this->em->createQueryBuilder()
+            ->select(['f.l7proto AS proto', 'COUNT(f.l7proto) AS count'])
+            ->from(Flow::class, 'f')
+            ->groupBy('f.l7proto')
+            ->where('f.l7proto IS NOT NULL')
+            ->orderBy('f.l7proto', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    #[Override]
+    public function countFlows(): int {
+        return $this->em->createQueryBuilder()
+            ->select('COUNT(f)')
+            ->from(Flow::class, 'f')
             ->getQuery()
             ->getSingleScalarResult();
     }

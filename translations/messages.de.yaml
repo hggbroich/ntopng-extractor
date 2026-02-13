@@ -19,3 +19,13 @@ flows:
     asn: ASN
     country: Land
     info: Info
+
+hosts:
+    menu: Hosts
+    count: '%count% Hosts'
+
+    ip: IP-Adresse
+    mac: MAC-Addresse
+    name: Hostname
+    first_seen: als erstes gesehen
+    last_seen: zuletzt gesehen

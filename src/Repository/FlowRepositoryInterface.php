@@ -23,4 +23,15 @@ interface FlowRepositoryInterface {
     public function findL7Proto(): array;
 
     public function purgeOlderThan(DateTime $threshold): int;
+
+    public function computeL4ProtoStatistics(): array;
+
+    public function computeL7ProtoStatistics(): array;
+
+    public function countFlows(): int;
+
+    /**
+     * @return string[]
+     */
+    public function findInfo(): array;
 }
