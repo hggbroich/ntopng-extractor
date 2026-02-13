@@ -18,6 +18,8 @@ framework:
                 auth_basic: '%env(NTOPNG_AUTH)%'
                 cafile: '%kernel.project_dir%/certs/%env(NTOPNG_CERT)%'
                 max_redirects: 0
+                headers:
+                    Accept: application/json
 
 when@test:
     framework:
