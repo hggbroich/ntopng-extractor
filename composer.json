@@ -12,33 +12,33 @@
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.6.2",
         "dragonmantank/cron-expression": "^3.6",
-        "gpslab/geoip2": "^2.1",
+        "gpslab/geoip2": "^2.1.3",
         "knplabs/knp-menu-bundle": "^3.7",
         "knplabs/knp-time-bundle": "^2.5",
         "phpdocumentor/reflection-docblock": "^5.6.6",
         "phpstan/phpdoc-parser": "^2.3.2",
         "ramazancetinkaya/byte-formatter": "^1.0",
         "runtime/frankenphp-symfony": "^1.0",
-        "schulit/common-bundle": "*",
-        "symfony/console": "7.3.*",
-        "symfony/doctrine-messenger": "7.3.*",
-        "symfony/dotenv": "7.3.*",
+        "schulit/common-bundle": "^6.0.2",
+        "symfony/console": "^7.4.4",
+        "symfony/doctrine-messenger": "^7.4.5",
+        "symfony/dotenv": "^7.4",
         "symfony/flex": "^2.10",
-        "symfony/framework-bundle": "7.3.*",
-        "symfony/http-client": "7.3.*",
-        "symfony/messenger": "7.3.*",
-        "symfony/monolog-bundle": "^4.0",
-        "symfony/property-access": "7.3.*",
-        "symfony/property-info": "7.3.*",
-        "symfony/runtime": "7.3.*",
-        "symfony/scheduler": "7.3.*",
-        "symfony/serializer": "7.3.*",
-        "symfony/twig-bundle": "7.3.*",
-        "symfony/web-link": "7.3.*",
+        "symfony/framework-bundle": "^7.4.5",
+        "symfony/http-client": "^7.4.5",
+        "symfony/messenger": "^7.4.4",
+        "symfony/monolog-bundle": "^4.0.1",
+        "symfony/property-access": "^7.4.4",
+        "symfony/property-info": "^7.4.5",
+        "symfony/runtime": "^7.4.1",
+        "symfony/scheduler": "^7.4.4",
+        "symfony/serializer": "^7.4.5",
+        "symfony/twig-bundle": "^7.4.4",
+        "symfony/web-link": "^7.4.4",
         "symfony/webpack-encore-bundle": "^2.4",
-        "symfony/yaml": "7.3.*",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "symfony/yaml": "^7.4.1",
+        "twig/extra-bundle": "^2.12|^3.23",
+        "twig/twig": "^2.12|^3.23"
     },
     "config": {
         "allow-plugins": {
@@ -88,7 +88,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.3.*"
+            "require": "^7.4"
         }
     }
 }
