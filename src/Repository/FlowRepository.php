@@ -75,6 +75,7 @@ class FlowRepository extends AbstractRepository implements FlowRepositoryInterfa
             ->groupBy('f.info')
             ->where('f.info IS NOT NULL')
             ->andWhere("f.info != ''")
+            ->andWhere("f.l4proto = 'TCP'")
             ->orderBy('f.info', 'ASC')
             ->getQuery()
             ->getSingleColumnResult();
