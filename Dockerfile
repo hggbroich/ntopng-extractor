@@ -110,7 +110,7 @@ EXPOSE 8080
 COPY .docker/startup.sh startup.sh
 RUN chmod +x startup.sh
 
-RUN chown -R nobody:nobody /var/www/html /run /var/lib/nginx /var/log/nginx \
+RUN chown -R nobody:nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 USER nobody
 
 CMD ["./startup.sh"]
