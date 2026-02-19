@@ -5,8 +5,10 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.4",
+        "ext-amqp": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-mbstring": "*",
         "doctrine/dbal": "^3.10.4",
         "doctrine/doctrine-bundle": "^2.18.2",
         "doctrine/doctrine-migrations-bundle": "^3.7",
@@ -20,6 +22,7 @@
         "ramazancetinkaya/byte-formatter": "^1.0",
         "runtime/frankenphp-symfony": "^1.0",
         "schulit/common-bundle": "^6.0.2",
+        "symfony/amqp-messenger": "^7.4",
         "symfony/console": "^7.4.4",
         "symfony/doctrine-messenger": "^7.4.5",
         "symfony/dotenv": "^7.4",

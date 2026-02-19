@@ -10,6 +10,13 @@ services:
     env_file:
       - .env.local
 
+  rabbitmq:
+    image: rabbitmq:4-management
+    restart: always
+    hostname: rabbitmq
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq
+
   db:
     image: mariadb:10.11
     restart: always
@@ -25,3 +32,4 @@ services:
 
 volumes:
   db_data:
+  rabbit_data:

@@ -11,6 +11,7 @@ RUN apk add --no-cache icu-dev  \
     libzip-dev \
     libxslt-dev \
     libgcrypt-dev \
+    rabbitmq-c-dev \
     supervisor \
     nginx \
     curl
@@ -21,10 +22,11 @@ RUN apk add --no-cache --virtual .build-deps \
     make \
     && docker-php-ext-install -j$(nproc) pdo_mysql pcntl intl zip xsl sysvsem \
     && pecl install apcu \
+    && pecl install amqp \
     && pecl clear-cache \
     && apk del .build-deps \
     && docker-php-source delete \
-    && docker-php-ext-enable pdo_mysql pcntl intl zip apcu sysvsem
+    && docker-php-ext-enable pdo_mysql pcntl intl zip apcu sysvsem amqp
 
 # Copy php.ini
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php.ini
@@ -108,8 +110,8 @@ EXPOSE 8080
 COPY .docker/startup.sh startup.sh
 RUN chmod +x startup.sh
 
-RUN chown -R nobody:nobody /var/www/html /run /var/lib/nginx /var/log/nginx
-USER nobody
+#RUN chown -R nobody:nobody /var/www/html /run /var/lib/nginx /var/log/nginx
+#USER nobody
 
 CMD ["./startup.sh"]
 
