@@ -39,7 +39,7 @@ class Flow {
     #[ORM\Column(type: Types::JSON)]
     public array $geoIP = [ ];
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public string|null $info = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
