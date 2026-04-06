@@ -1,15 +1,15 @@
 #!/bin/sh
 
 # Clear cache
-php bin/console cache:clear
+/usr/local/bin/frankenphp php-cli bin/console cache:clear
 
 # Migrate database
-php bin/console doctrine:migrations:migrate --no-interaction -v
+/usr/local/bin/frankenphp php-cli bin/console doctrine:migrations:migrate --no-interaction -v
 
 # Fetch GeoIP database (only if MAXMIND_LICENSE_KEY is set)
 if [ -n "${MAXMIND_LICENSE_KEY}" ]; then
-    php bin/console geoip2:update
+    /usr/local/bin/frankenphp php-cli bin/console geoip2:update
 fi
 
-# Start container
-/usr/bin/supervisord -c "/etc/supervisor/conf.d/supervisord.conf"
+# Start FrankenPHP
+/usr/local/bin/frankenphp run --config /etc/caddy/Caddyfile
