@@ -71,7 +71,6 @@ WORKDIR /app
 
 # Copy whole project into image
 COPY . .
-COPY Caddyfile /etc/caddy/Caddyfile
 
 # Run composer install
 RUN composer install --no-dev --classmap-authoritative --no-scripts
@@ -88,6 +87,9 @@ RUN php bin/console asset-map:compile
 # Copy startup.sh
 COPY .docker/startup.sh startup.sh
 RUN chmod +x startup.sh
+
+# Copy Caddyfile
+COPY Caddyfile /etc/caddy/Caddyfile
 
 # Export HTTP port
 EXPOSE 80
