@@ -1,36 +1,7 @@
-import Choices from "choices.js";
-
-require('../css/app.scss');
-
 import { Modal, Tooltip, Popover } from "bootstrap";
-
-require('../../vendor/schulit/common-bundle/assets/js/polyfill');
-require('../../vendor/schulit/common-bundle/assets/js/menu');
-require('../../vendor/schulit/common-bundle/assets/js/dropdown-polyfill');
+import "../styles/app.css";
 
 document.addEventListener('DOMContentLoaded', function() {
-    let initializeChoice = function(el) {
-        let removeItemButton = false;
-
-        if(el.getAttribute('multiple') !== null) {
-            removeItemButton = true;
-        }
-
-        let config = {
-            itemSelectText: '',
-            shouldSort: false,
-            shouldSortItems: false,
-            removeItemButton: removeItemButton,
-            placeholder: true
-        };
-
-        el.choices = new Choices(el, config);
-    };
-
-    document.querySelectorAll('select[data-choice=true]').forEach(function(el) {
-        initializeChoice(el);
-    });
-
     document.querySelectorAll('[title]').forEach(function(el) {
         new Tooltip(el, {
             placement: 'bottom'
