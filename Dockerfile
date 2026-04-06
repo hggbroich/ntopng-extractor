@@ -71,6 +71,7 @@ WORKDIR /app
 
 # Copy whole project into image
 COPY . .
+COPY .docker/startup.sh startup.sh
 COPY Caddyfile /etc/caddy/Caddyfile
 
 # Run composer install
