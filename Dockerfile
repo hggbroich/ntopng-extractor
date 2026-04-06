@@ -71,7 +71,6 @@ WORKDIR /app
 
 # Copy whole project into image
 COPY . .
-COPY .docker/startup.sh startup.sh
 COPY Caddyfile /etc/caddy/Caddyfile
 
 # Run composer install
@@ -85,6 +84,10 @@ RUN php bin/console importmap:install
 
 # Compile assets
 RUN php bin/console asset-map:compile
+
+# Copy startup.sh
+COPY .docker/startup.sh startup.sh
+RUN chmod +x startup.sh
 
 # Export HTTP port
 EXPOSE 80
