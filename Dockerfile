@@ -89,4 +89,5 @@ RUN php bin/console asset-map:compile
 # Export HTTP port
 EXPOSE 80
 
+HEALTHCHECK --start-period=60s CMD php -r 'exit(false === @file_get_contents("http://localhost:2019/metrics", context: stream_context_create(["http" => ["timeout" => 5]])) ? 1 : 0);'
 CMD ["./startup.sh"]
