@@ -1,5 +1,6 @@
 dashboard:
     menu: Übersicht
+    count: '%count% Domains/URLs'
 
 flows:
     menu: Flows

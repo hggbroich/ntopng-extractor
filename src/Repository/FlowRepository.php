@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Flow;
+use ArrayIterator;
 use DateTime;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Override;
 
 class FlowRepository extends AbstractRepository implements FlowRepositoryInterface{
@@ -68,8 +70,8 @@ class FlowRepository extends AbstractRepository implements FlowRepositoryInterfa
     }
 
     #[Override]
-    public function findInfo(): array {
-        return $this->em->createQueryBuilder()
+    public function findInfo(PaginationQuery $paginationQuery): PaginatedResult {
+        $query = $this->em->createQueryBuilder()
             ->select('DISTINCT f.info')
             ->from(Flow::class, 'f')
             ->groupBy('f.info')
@@ -77,8 +79,17 @@ class FlowRepository extends AbstractRepository implements FlowRepositoryInterfa
             ->andWhere("f.info != ''")
             ->andWhere("f.l4proto = 'TCP'")
             ->orderBy('f.info', 'ASC')
-            ->getQuery()
-            ->getSingleColumnResult();
+            ->setFirstResult($paginationQuery->getOffset())
+            ->setMaxResults($paginationQuery->limit)
+            ->getQuery();
+
+        $paginator = new Paginator($query, false);
+        return new PaginatedResult(
+            new ArrayIterator($query->getSingleColumnResult()),
+            $paginator->count(),
+            $paginationQuery->page,
+            $paginationQuery->limit
+        );
     }
 
     #[Override]

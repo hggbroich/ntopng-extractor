@@ -41,5 +41,23 @@
                 <a class="list-group-item list-group-item-action" href="{{ path('flows', { hostname: i }) }}">{{ i }}</a>
             {% endfor %}
         </div>
+
+        <div class="card-footer">
+            <div class="d-flex">
+                <div class="flex-fill align-self-center">
+                    {{ 'dashboard.count'|trans({'%count%': info.totalCount}) }}
+                </div>
+
+                <div class="ms-auto">
+                    {% include '@Common/includes/pagination.html.twig' with {
+                        currentFilters: { },
+                        currentPage: info.page,
+                        lastPage: info.totalPages,
+                        paginationPath: 'dashboard',
+                        showAlwaysFirstAndLast: true
+                    } %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

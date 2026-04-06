@@ -31,7 +31,7 @@ interface FlowRepositoryInterface {
     public function countFlows(): int;
 
     /**
-     * @return string[]
+     * @return PaginatedResult<string>
      */
-    public function findInfo(): array;
+    public function findInfo(PaginationQuery $paginationQuery): PaginatedResult;
 }
