@@ -91,6 +91,10 @@ RUN chmod +x startup.sh
 # Copy Caddyfile
 COPY .docker/Caddyfile /etc/caddy/Caddyfile
 
+# Create cache/ and log/ directories
+CMD mkdir -p var/cache
+CMD mkdir -p var/log
+
 # Export HTTP port
 EXPOSE 80
 
