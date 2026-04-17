@@ -46,7 +46,7 @@ RUN <<-EOF
 	done
 EOF
 
-FROM dunglas/frankenphp AS base
+FROM dunglas/frankenphp AS runner
 LABEL maintainer="Heilig-Geist-Gymnasium" \
       description="ntopng Extractor"
 
@@ -89,7 +89,7 @@ COPY .docker/startup.sh startup.sh
 RUN chmod +x startup.sh
 
 # Copy Caddyfile
-COPY Caddyfile /etc/caddy/Caddyfile
+COPY .docker/Caddyfile /etc/caddy/Caddyfile
 
 # Export HTTP port
 EXPOSE 80

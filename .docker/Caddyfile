@@ -37,10 +37,10 @@
         }
     }
 
-    http_port {$PORT:80}
+    http_port 80
 }
 
-:{$PORT:80} {
+:80 {
     log
     encode zstd br gzip
 
