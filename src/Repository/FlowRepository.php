@@ -11,7 +11,7 @@ use Override;
 class FlowRepository extends AbstractRepository implements FlowRepositoryInterface{
 
     #[Override]
-    public function find(PaginationQuery $paginationQuery, ?string $localIp = null, ?string $l4proto = null, ?string $l7proto = null, ?string $hostname): PaginatedResult {
+    public function find(PaginationQuery $paginationQuery, ?string $localIp = null, ?string $l4proto = null, ?string $l7proto = null, ?string $hostname = null): PaginatedResult {
         $qb = $this->em->createQueryBuilder()
             ->select('f')
             ->from(Flow::class, 'f')

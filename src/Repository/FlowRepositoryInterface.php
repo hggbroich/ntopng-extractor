@@ -10,7 +10,7 @@ interface FlowRepositoryInterface {
     /**
      * @return PaginatedResult<Flow>
      */
-    public function find(PaginationQuery $paginationQuery, string|null $localIp = null, string|null $l4proto = null, string|null $l7proto = null, string|null $hostname): PaginatedResult;
+    public function find(PaginationQuery $paginationQuery, string|null $localIp = null, string|null $l4proto = null, string|null $l7proto = null, string|null $hostname = null): PaginatedResult;
 
     /**
      * @return string[]
