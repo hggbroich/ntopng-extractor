@@ -37,6 +37,11 @@
         }
     }
 
+    log {
+        level INFO
+        output stderr
+    }
+
     http_port 80
 }
 
