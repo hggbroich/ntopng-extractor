@@ -42,7 +42,7 @@
 
 :80 {
     log
-    encode zstd br gzip
+    encode gzip
 
     root ./public/
 

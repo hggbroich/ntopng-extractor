@@ -28,8 +28,6 @@ RUN install-php-extensions \
     pcntl \
     xsl \
     sysvsem \
-    brotli \
-    zstd \
     zlib
 
 # Copy shared libs of frankenphp and all installed extensions to temporary location
