@@ -1,0 +1,39 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'domains.menu'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.menu'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="list-group list-group-flush">
+            {% for i in info %}
+                <a class="list-group-item list-group-item-action" href="{{ path('flows', { hostname: i }) }}">{{ i }}</a>
+            {% endfor %}
+        </div>
+
+        <div class="card-footer">
+            <div class="d-flex">
+                <div class="flex-fill align-self-center">
+                    {{ 'domains.count'|trans({'%count%': info.totalCount}) }}
+                </div>
+
+                <div class="ms-auto">
+                    {% include '@Common/includes/pagination.html.twig' with {
+                        currentFilters: { },
+                        currentPage: info.page,
+                        lastPage: info.totalPages,
+                        paginationPath: 'domains',
+                        showAlwaysFirstAndLast: true
+                    } %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

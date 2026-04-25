@@ -13,18 +13,15 @@ class IndexAction extends AbstractController {
     #[Route('/', name: 'dashboard')]
     public function __invoke(
         FlowRepositoryInterface $flowRepository,
-        #[MapQueryParameter] int $page = 1,
     ): Response {
         $flowCount = $flowRepository->countFlows();
         $l4statistics = $flowRepository->computeL4ProtoStatistics();
         $l7statistics = $flowRepository->computeL7ProtoStatistics();
-        $info = $flowRepository->findInfo(new PaginationQuery(page: $page, limit: 10));
 
         return $this->render('dashboard/index.html.twig', [
             'l4statistics' => $l4statistics,
             'l7statistics' => $l7statistics,
-            'flowCount' => $flowCount,
-            'info' => $info
+            'flowCount' => $flowCount
         ]);
     }
 }

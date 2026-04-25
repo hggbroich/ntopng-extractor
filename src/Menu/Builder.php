@@ -19,6 +19,11 @@ readonly class Builder {
         ])
             ->setExtra('icon', 'fa fa-home');
 
+        $menu->addCHild('domains.menu', [
+            'route' => 'domains'
+        ])
+            ->setExtra('icon', 'fa fa-globe');
+
         $menu->addChild('flows.menu', [
             'route' => 'flows'
         ])
