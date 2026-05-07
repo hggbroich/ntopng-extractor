@@ -1,5 +1,3 @@
-### --- First Stage: Base Image --- ###
-
 FROM dunglas/frankenphp:builder AS builder
 
 COPY --from=caddy:builder /usr/bin/xcaddy /usr/bin/xcaddy
