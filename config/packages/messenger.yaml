@@ -5,8 +5,13 @@ framework:
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            failed: 'doctrine://default?queue_name=failed'
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                retry_strategy:
+                    max_retries: 3
+                    delay: 30000 # 30s
+                    multiplier: 1 # 30s, 60s, 90s (related to the flush timeout for flows, see App\Command\Collect*Command
+                    max_delay: 100000 # 100s
             sync: 'sync://'
 
         routing:
